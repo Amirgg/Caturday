@@ -16,40 +16,42 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ActivityViewModel @Inject constructor(
-    private val getThemeUseCase: GetThemeUseCase,
-    private val setThemeUseCase: SetThemeUseCase,
-) : ViewModel() {
-    private val _uiState: MutableStateFlow<State> = MutableStateFlow(State())
-    val uiState: StateFlow<State> = _uiState.asStateFlow()
+class ActivityViewModel
+    @Inject
+    constructor(
+        private val getThemeUseCase: GetThemeUseCase,
+        private val setThemeUseCase: SetThemeUseCase,
+    ) : ViewModel() {
+        private val _uiState: MutableStateFlow<State> = MutableStateFlow(State())
+        val uiState: StateFlow<State> = _uiState.asStateFlow()
 
-    data class State(
-        val selectedTab: String = Screen.BreedsList.route,
-        val theme: Theme = Theme.DEFAULT_THEME,
-    )
+        data class State(
+            val selectedTab: String = Screen.BreedsList.route,
+            val theme: Theme = Theme.DEFAULT_THEME,
+        )
 
-    init {
-        updateTheme()
-    }
+        init {
+            updateTheme()
+        }
 
-    fun onTabClick(route: String) {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(selectedTab = route)
+        fun onTabClick(route: String) {
+            viewModelScope.launch {
+                _uiState.update {
+                    it.copy(selectedTab = route)
+                }
             }
         }
-    }
 
-    fun setTheme(theme: Theme) {
-        viewModelScope.launch {
-            setThemeUseCase(theme)
+        fun setTheme(theme: Theme) {
+            viewModelScope.launch {
+                setThemeUseCase(theme)
+            }
         }
-    }
 
-    private fun updateTheme() {
-        viewModelScope.launch {
-            getThemeUseCase().collectLatest { theme ->
-                _uiState.update {
+        private fun updateTheme() {
+            viewModelScope.launch {
+                getThemeUseCase().collectLatest { theme ->
+                    _uiState.update {
                     it.copy(theme = theme)
                 }
             }

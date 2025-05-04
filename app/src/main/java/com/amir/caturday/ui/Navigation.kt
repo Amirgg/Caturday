@@ -16,16 +16,20 @@ import com.amir.caturday.domain.model.Theme
 fun Navigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.BreedsList.route
+        startDestination = Screen.BreedsList.route,
     ) {
         composable(route = Screen.BreedsList.route) {
         }
-        composable(route = Screen.BreedsDetails.route, arguments = listOf(
-            navArgument(Screen.ARG_ID) {
-                type = NavType.StringType
-                nullable = true
-            }
-        )) {
+        composable(
+            route = Screen.BreedsDetails.route,
+            arguments =
+                listOf(
+                    navArgument(Screen.ARG_ID) {
+                        type = NavType.StringType
+                        nullable = true
+                    },
+                ),
+        ) {
         }
         composable(route = Screen.FavoritesList.route) {
         }

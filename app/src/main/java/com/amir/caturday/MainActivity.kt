@@ -32,11 +32,12 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     bottomBar = {
                         BottomNavigationBar(
-                            items = persistentListOf(
-                                NavMenuItem(Screen.BreedsList.route, stringResource(R.string.nav_home), R.drawable.ic_paw),
-                                NavMenuItem(Screen.FavoritesList.route, stringResource(R.string.nav_fav), R.drawable.ic_heart),
-                                NavMenuItem(Screen.Settings.route, stringResource(R.string.nav_settings), R.drawable.ic_settings),
-                            ),
+                            items =
+                                persistentListOf(
+                                    NavMenuItem(Screen.BreedsList.route, stringResource(R.string.nav_home), R.drawable.ic_paw),
+                                    NavMenuItem(Screen.FavoritesList.route, stringResource(R.string.nav_fav), R.drawable.ic_heart),
+                                    NavMenuItem(Screen.Settings.route, stringResource(R.string.nav_settings), R.drawable.ic_settings),
+                                ),
                             onItemClick = {
                                 viewModel.onTabClick(it.route)
                                 nav.navigate(it.route) {
@@ -49,7 +50,8 @@ class MainActivity : ComponentActivity() {
                             },
                             selectedTab = state.value.selectedTab,
                         )
-                    }) {
+                    },
+                ) {
                     Box(modifier = Modifier.padding(it)) {
                         Navigation(navController = nav)
                     }

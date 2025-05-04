@@ -1,3 +1,5 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -5,6 +7,7 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.safeArgs)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.ktlint)
 }
 
 android {
@@ -46,6 +49,14 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    ktlint {
+        android = true
+        ignoreFailures = false
+        disabledRules.addAll("max-line-length", "final-newline")
+        reporters {
+            reporter(ReporterType.PLAIN)
         }
     }
 }

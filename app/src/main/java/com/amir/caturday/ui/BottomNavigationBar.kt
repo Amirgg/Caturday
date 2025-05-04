@@ -36,10 +36,11 @@ fun BottomNavigationBar(
 ) {
     Column {
         Box(
-            modifier = Modifier
-                .height(1.dp)
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface)
+            modifier =
+                Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surface),
         )
         NavigationBar(
             modifier = Modifier.fillMaxWidth(),
@@ -52,37 +53,40 @@ fun BottomNavigationBar(
                     onClick = {
                         onItemClick(it)
                     },
-                    colors = NavigationBarItemColors(
-                        selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                        selectedTextColor = MaterialTheme.colorScheme.primary,
-                        selectedIndicatorColor = MaterialTheme.colorScheme.primary,
-                        unselectedIconColor = MaterialTheme.colorScheme.onBackground,
-                        unselectedTextColor = MaterialTheme.colorScheme.onBackground,
-                        disabledIconColor = MaterialTheme.colorScheme.outline,
-                        disabledTextColor = MaterialTheme.colorScheme.outline,
+                    colors =
+                        NavigationBarItemColors(
+                            selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            selectedIndicatorColor = MaterialTheme.colorScheme.primary,
+                            unselectedIconColor = MaterialTheme.colorScheme.onBackground,
+                            unselectedTextColor = MaterialTheme.colorScheme.onBackground,
+                            disabledIconColor = MaterialTheme.colorScheme.outline,
+                            disabledTextColor = MaterialTheme.colorScheme.outline,
                     ),
                     alwaysShowLabel = true,
                     label = {
                         Text(
                             text = it.name,
                             style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
                     },
                     icon = {
                         Column(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center,
-                            modifier = Modifier.padding(top = 2.dp)
+                            modifier = Modifier.padding(top = 2.dp),
                         ) {
                             Icon(
                                 painter = painterResource(it.iconResource),
                                 contentDescription = it.name,
-                                modifier = Modifier
-                                    .size(24.dp)
+                                modifier =
+                                    Modifier
+                                        .size(24.dp),
                             )
                         }
-                    })
+                    },
+                )
             }
         }
     }
@@ -93,10 +97,11 @@ fun BottomNavigationBar(
 private fun BottomNavigationBarPreview() {
     AppPreviewTheme {
         BottomNavigationBar(
-            items = persistentListOf(
-                NavMenuItem("R1", stringResource(R.string.nav_home), R.drawable.ic_paw),
-                NavMenuItem("R2", stringResource(R.string.nav_fav), R.drawable.ic_heart),
-                NavMenuItem("R3", stringResource(R.string.nav_settings), R.drawable.ic_settings),
+            items =
+                persistentListOf(
+                    NavMenuItem("R1", stringResource(R.string.nav_home), R.drawable.ic_paw),
+                    NavMenuItem("R2", stringResource(R.string.nav_fav), R.drawable.ic_heart),
+                    NavMenuItem("R3", stringResource(R.string.nav_settings), R.drawable.ic_settings),
             ),
             selectedTab = "R1",
             onItemClick = {},
