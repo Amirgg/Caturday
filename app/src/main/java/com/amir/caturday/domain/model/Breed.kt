@@ -21,4 +21,5 @@ data class Breed(
     val socialLeeds: Int,
     val wikipediaUrl: String,
     val referenceImageId: String,
+    val isFavorite: Boolean,
 )
