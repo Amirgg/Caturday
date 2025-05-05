@@ -37,7 +37,7 @@ class BreedsRepositoryImpl(
                     ?.toSet() ?: emptySet()
             }
 
-    override suspend fun getBreeds(): Flow<DataState<List<Breed>>> =
+    override fun getBreeds(): Flow<DataState<List<Breed>>> =
         combine<List<BreedEntity>, Set<String>, DataState<List<Breed>>>(
             breedDao.getBreeds(),
             favoritesFlow,
@@ -74,7 +74,7 @@ class BreedsRepositoryImpl(
             }
         }
 
-    override suspend fun searchBreeds(query: String): Flow<DataState<List<Breed>>> =
+    override fun searchBreeds(query: String): Flow<DataState<List<Breed>>> =
         flow {
             emit(DataState.Loading)
             val result =

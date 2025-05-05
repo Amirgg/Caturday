@@ -14,8 +14,14 @@ import com.amir.caturday.data.repo.BreedsRepository
 import com.amir.caturday.data.repo.BreedsRepositoryImpl
 import com.amir.caturday.data.repo.SettingsRepository
 import com.amir.caturday.data.repo.SettingsRepositoryImpl
+import com.amir.caturday.domain.usecase.GetBreedByIdUseCase
+import com.amir.caturday.domain.usecase.GetBreedsUseCase
 import com.amir.caturday.domain.usecase.GetThemeUseCase
+import com.amir.caturday.domain.usecase.InvalidateCacheUseCase
+import com.amir.caturday.domain.usecase.PaginateBreedsUseCase
+import com.amir.caturday.domain.usecase.SearchBreedsUseCase
 import com.amir.caturday.domain.usecase.SetThemeUseCase
+import com.amir.caturday.domain.usecase.ToggleFavoriteUseCase
 import com.amir.caturday.util.Constant
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -99,5 +105,41 @@ object AppModule {
     fun provideSetThemeUseCase(settingsRepository: SettingsRepository): SetThemeUseCase =
         SetThemeUseCase(
             settingsRepository = settingsRepository,
+        )
+
+    @Provides
+    fun provideGetBreedByIdUseCase(breedsRepository: BreedsRepository): GetBreedByIdUseCase =
+        GetBreedByIdUseCase(
+            breedsRepository = breedsRepository,
+        )
+
+    @Provides
+    fun provideGetBreedsUseCase(breedsRepository: BreedsRepository): GetBreedsUseCase =
+        GetBreedsUseCase(
+            breedsRepository = breedsRepository,
+        )
+
+    @Provides
+    fun provideInvalidateCacheUseCase(breedsRepository: BreedsRepository): InvalidateCacheUseCase =
+        InvalidateCacheUseCase(
+            breedsRepository = breedsRepository,
+        )
+
+    @Provides
+    fun providePaginateBreedsUseCase(breedsRepository: BreedsRepository): PaginateBreedsUseCase =
+        PaginateBreedsUseCase(
+            breedsRepository = breedsRepository,
+        )
+
+    @Provides
+    fun provideSearchBreedsUseCase(breedsRepository: BreedsRepository): SearchBreedsUseCase =
+        SearchBreedsUseCase(
+            breedsRepository = breedsRepository,
+        )
+
+    @Provides
+    fun provideToggleFavoriteUseCase(breedsRepository: BreedsRepository): ToggleFavoriteUseCase =
+        ToggleFavoriteUseCase(
+            breedsRepository = breedsRepository,
         )
 }

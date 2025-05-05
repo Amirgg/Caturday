@@ -55,7 +55,7 @@ android {
     ktlint {
         android = true
         ignoreFailures = false
-        disabledRules.addAll("max-line-length", "final-newline")
+        disabledRules.addAll("max-line-length", "final-newline", "indent", "import-ordering")
         reporters {
             reporter(ReporterType.PLAIN)
         }

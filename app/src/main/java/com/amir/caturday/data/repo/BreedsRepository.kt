@@ -5,13 +5,13 @@ import com.amir.caturday.domain.model.DataState
 import kotlinx.coroutines.flow.Flow
 
 interface BreedsRepository {
-    suspend fun getBreeds(): Flow<DataState<List<Breed>>>
+    fun getBreeds(): Flow<DataState<List<Breed>>>
 
     suspend fun paginate(page: Int): Flow<DataState<Unit>>
 
     suspend fun getBreedById(id: String): Flow<DataState<Breed>>
 
-    suspend fun searchBreeds(query: String): Flow<DataState<List<Breed>>>
+    fun searchBreeds(query: String): Flow<DataState<List<Breed>>>
 
     suspend fun toggleFavorite(
         id: String,
