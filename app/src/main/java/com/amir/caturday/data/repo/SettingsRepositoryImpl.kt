@@ -26,12 +26,12 @@ class SettingsRepositoryImpl
                         throw exception
                     }
                 }.map {
-                    Theme.valueOf(it[PreferenceKeys.theme] ?: Theme.DEFAULT_THEME.value)
+                    Theme.valueOf(it[PreferenceKeys.THEME] ?: Theme.DEFAULT_THEME.value)
                 }
 
         override suspend fun setTheme(theme: Theme) {
             dataStore.edit {
-                it[PreferenceKeys.theme] = theme.value
+                it[PreferenceKeys.THEME] = theme.value
+            }
         }
     }
-}
