@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.safeArgs)
     alias(libs.plugins.kapt)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -81,6 +82,9 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.datastore)
+    implementation(libs.room)
+    implementation(libs.roomKtx)
+    ksp(libs.roomCompiler)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.coroutinesTest)
