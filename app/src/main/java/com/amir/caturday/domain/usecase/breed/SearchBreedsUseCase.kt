@@ -1,4 +1,4 @@
-package com.amir.caturday.domain.usecase
+package com.amir.caturday.domain.usecase.breed
 
 import com.amir.caturday.data.repo.BreedsRepository
 import com.amir.caturday.domain.model.Breed
