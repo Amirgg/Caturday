@@ -18,7 +18,7 @@ data class Breed(
     @IntRange(from = 0, to = 5)
     val intelligence: Int,
     @IntRange(from = 0, to = 5)
-    val socialLeeds: Int,
+    val socialNeeds: Int,
     val wikipediaUrl: String,
     val referenceImageId: String,
     val isFavorite: Boolean,
