@@ -17,7 +17,10 @@ class TestBreedDao : BreedDao {
             emit(data)
         }
 
-    override fun getBreedById(id: String): BreedEntity? = data.firstOrNull { it.id == id }
+    override fun getBreedById(id: String): Flow<BreedEntity> =
+        flow {
+            emit(data.first { it.id == id })
+        }
 
     override fun invalidateCache() {
         data.clear()

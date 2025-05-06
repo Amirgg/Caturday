@@ -16,7 +16,7 @@ interface BreedDao {
     fun getBreeds(): Flow<List<BreedEntity>>
 
     @Query("SELECT * FROM tbl_breed WHERE id = :id")
-    fun getBreedById(id: String): BreedEntity?
+    fun getBreedById(id: String): Flow<BreedEntity>
 
     @Query("DELETE FROM tbl_breed")
     fun invalidateCache()

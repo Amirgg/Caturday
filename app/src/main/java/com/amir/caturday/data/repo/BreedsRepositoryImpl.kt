@@ -67,14 +67,16 @@ class BreedsRepositoryImpl(
         }.flowOn(Dispatchers.IO)
 
     override suspend fun getBreedById(id: String): Flow<DataState<Breed>> =
-        flow {
+        combine<BreedEntity, Set<String>, DataState<Breed>>(
+            breedDao.getBreedById(id),
+            favoritesFlow,
+        ) { entity, favorites ->
+            DataState.Success(entity.toBreed().copy(isFavorite = favorites.contains(entity.id)))
+        }.onStart {
             emit(DataState.Loading)
-            breedDao.getBreedById(id)?.let {
-                emit(DataState.Success(it.toBreed()))
-            } ?: run {
-                emit(DataState.Failure(DataState.Failure.CODE_NOT_FOUND, "Item not found"))
-            }
-        }.flowOn(Dispatchers.IO)
+        }.catch {
+            emit(DataState.Failure(DataState.Failure.CODE_NOT_FOUND, "Item not found"))
+        }
 
     override suspend fun toggleFavorite(
         id: String,

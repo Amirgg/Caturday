@@ -19,7 +19,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.unmockkAll
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -98,8 +97,22 @@ class BreedsRepositoryImplTest {
                 daoItems = listOf(breedDto.toBreedEntity().copy(id = "A"), breedDto.toBreedEntity().copy(id = "B")),
             )
             val repo = createRepo()
-            val breed = repo.getBreedById("A").last() as DataState.Success
+            val breed = repo.getBreedById("A").toListWithTimeout().last() as DataState.Success
             assertEquals("A", breed.data.id)
+        }
+
+    @Test
+    fun `when getting item by id, it should be marked as favorite if it is in favorites list`() =
+        runTest {
+            mockData(
+                daoItems = listOf(breedDto.toBreedEntity().copy(id = "A"), breedDto.toBreedEntity().copy(id = "B")),
+                favoriteItems = listOf("A"),
+            )
+            val repo = createRepo()
+            var breed = repo.getBreedById("A").toListWithTimeout().last() as DataState.Success
+            assertTrue(breed.data.isFavorite)
+            breed = repo.getBreedById("B").toListWithTimeout().last() as DataState.Success
+            assertFalse(breed.data.isFavorite)
         }
 
     @Test
@@ -110,7 +123,7 @@ class BreedsRepositoryImplTest {
                 daoItems = listOf(breedDto.toBreedEntity().copy(id = "A"), breedDto.toBreedEntity().copy(id = "B")),
             )
             val repo = createRepo()
-            val breed = repo.getBreedById("C").last()
+            val breed = repo.getBreedById("C").toListWithTimeout().last()
             assert(breed is DataState.Failure)
         }
 
