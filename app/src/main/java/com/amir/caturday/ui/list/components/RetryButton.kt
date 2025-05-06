@@ -41,7 +41,7 @@ fun RetryButton(
             )
             Text(
                 text = stringResource(R.string.retry),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onPrimary,
             )

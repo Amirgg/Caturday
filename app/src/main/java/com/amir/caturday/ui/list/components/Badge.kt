@@ -27,7 +27,7 @@ fun Badge(
             textAlign = TextAlign.Start,
             modifier =
                 Modifier
-                    .clip(RoundedCornerShape(50))
+                    .clip(RoundedCornerShape(6.dp))
                     .background(MaterialTheme.colorScheme.surfaceDim)
                     .padding(horizontal = 6.dp, vertical = 4.dp),
         )

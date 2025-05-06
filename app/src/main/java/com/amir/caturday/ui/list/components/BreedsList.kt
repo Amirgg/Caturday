@@ -1,7 +1,6 @@
 package com.amir.caturday.ui.list.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +29,7 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 fun BreedsList(
     state: BreedsListViewModel.State,
-    onToggleFavorite: (breed: BreedCardUiModel) -> Unit,
+    onFavoriteClick: (breed: BreedCardUiModel) -> Unit,
     onBreedClick: (breed: BreedCardUiModel) -> Unit,
     onPaginate: () -> Unit,
     onDismissError: () -> Unit,
@@ -66,13 +65,8 @@ fun BreedsList(
             ) {
                 BreedCard(
                     data = data[it],
-                    onFavoriteClick = {
-                        onToggleFavorite(data[it])
-                    },
-                    modifier =
-                        Modifier.fillMaxWidth().clickable {
-                            onBreedClick(data[it])
-                        },
+                    onClick = { onBreedClick(data[it]) },
+                    onFavoriteClick = { onFavoriteClick(data[it]) },
                 )
             }
             if (state.showPaginationLoading) {
@@ -122,7 +116,7 @@ private fun BreedsListPreview() {
                     errorMessage = "",
                     showError = false,
                 ),
-            onToggleFavorite = {},
+            onFavoriteClick = {},
             onBreedClick = {},
             onPaginate = {},
             onDismissError = {},

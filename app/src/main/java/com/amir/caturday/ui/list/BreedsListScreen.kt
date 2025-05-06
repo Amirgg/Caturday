@@ -78,7 +78,7 @@ fun BreedsListScreen() {
                     else ->
                         BreedsList(
                             state = state.value,
-                            onToggleFavorite = breedsListViewModel::onToggleFavorite,
+                            onFavoriteClick = breedsListViewModel::onFavoriteClick,
                             onBreedClick = { navigation.navigate(Screen.BreedsDetails.withArg(it.id)) },
                             onPaginate = breedsListViewModel::onPaginate,
                             onDismissError = breedsListViewModel::onDismissErrorClick,

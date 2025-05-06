@@ -1,6 +1,7 @@
 package com.amir.caturday.ui.list.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +40,7 @@ import com.amir.caturday.util.noRippleClickable
 @Composable
 fun BreedCard(
     data: BreedCardUiModel,
+    onClick: () -> Unit,
     onFavoriteClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -50,6 +52,7 @@ fun BreedCard(
                 Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
+                    .clickable { onClick() }
                     .background(MaterialTheme.colorScheme.surface)
                     .height(IntrinsicSize.Max),
         ) {
@@ -75,7 +78,7 @@ fun BreedCard(
                 )
 
                 Text(
-                    text = stringResource(R.string.origin, data.origin),
+                    text = stringResource(R.string.origin_x, data.origin),
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Start,
@@ -121,6 +124,7 @@ private fun BreedCardPreview() {
         ) {
             BreedCard(
                 data = breedDto.toBreed().toBreedCardUiModel(),
+                onClick = {},
                 onFavoriteClick = {},
                 modifier = Modifier.fillMaxWidth().padding(10.dp),
             )

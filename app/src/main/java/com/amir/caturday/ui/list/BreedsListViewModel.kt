@@ -88,7 +88,7 @@ class BreedsListViewModel
             }
         }
 
-        fun onToggleFavorite(breed: BreedCardUiModel) {
+        fun onFavoriteClick(breed: BreedCardUiModel) {
             viewModelScope.launch {
                 toggleFavoriteUseCase(breed.id, breed.isFavorite.not())
             }

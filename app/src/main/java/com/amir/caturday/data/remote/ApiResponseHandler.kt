@@ -10,9 +10,9 @@ abstract class ApiResponseHandler {
             val result = func()
             DataState.Success(result)
         } catch (e: IOException) {
-            DataState.Failure(DataState.Failure.CODE_NETWORK_FAILURE, "Something went wrong, Check internet connection.")
+            DataState.Failure(DataState.Failure.CODE_NETWORK_FAILURE, "Check internet connection")
         } catch (e: HttpException) {
-            DataState.Failure(e.code(), "Something went wrong, Please try again later.")
+            DataState.Failure(e.code(), "Please try again later")
         } catch (e: Exception) {
             DataState.Failure(DataState.Failure.CODE_INVALID, "Something went wrong.")
         }
