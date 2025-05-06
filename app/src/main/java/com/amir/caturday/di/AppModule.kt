@@ -18,7 +18,6 @@ import com.amir.caturday.domain.usecase.breed.GetBreedByIdUseCase
 import com.amir.caturday.domain.usecase.breed.GetBreedsUseCase
 import com.amir.caturday.domain.usecase.breed.InvalidateCacheUseCase
 import com.amir.caturday.domain.usecase.breed.PaginateBreedsUseCase
-import com.amir.caturday.domain.usecase.breed.SearchBreedsUseCase
 import com.amir.caturday.domain.usecase.breed.ToggleFavoriteUseCase
 import com.amir.caturday.domain.usecase.settings.GetThemeUseCase
 import com.amir.caturday.domain.usecase.settings.SetThemeUseCase
@@ -128,12 +127,6 @@ object AppModule {
     @Provides
     fun providePaginateBreedsUseCase(breedsRepository: BreedsRepository): PaginateBreedsUseCase =
         PaginateBreedsUseCase(
-            breedsRepository = breedsRepository,
-        )
-
-    @Provides
-    fun provideSearchBreedsUseCase(breedsRepository: BreedsRepository): SearchBreedsUseCase =
-        SearchBreedsUseCase(
             breedsRepository = breedsRepository,
         )
 

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Caturday</string>
     <string name="nav_home">Home</string>
-    <string name="nav_fav">Favorites</string>
     <string name="nav_settings">Settings</string>
+    <string name="origin">Origin: %s</string>
+    <string name="retry">Retry</string>
+    <string name="no_result_title">No Result</string>
+    <string name="no_result_desc">Try searching a different word</string>
+    <string name="error_title">Oops!</string>
+    <string name="error_desc">Something went wrong</string>
 </resources>

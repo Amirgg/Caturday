@@ -62,7 +62,7 @@ fun BottomNavigationBar(
                             unselectedTextColor = MaterialTheme.colorScheme.onBackground,
                             disabledIconColor = MaterialTheme.colorScheme.outline,
                             disabledTextColor = MaterialTheme.colorScheme.outline,
-                    ),
+                        ),
                     alwaysShowLabel = true,
                     label = {
                         Text(
@@ -100,9 +100,8 @@ private fun BottomNavigationBarPreview() {
             items =
                 persistentListOf(
                     NavMenuItem("R1", stringResource(R.string.nav_home), R.drawable.ic_paw),
-                    NavMenuItem("R2", stringResource(R.string.nav_fav), R.drawable.ic_heart),
                     NavMenuItem("R3", stringResource(R.string.nav_settings), R.drawable.ic_settings),
-            ),
+                ),
             selectedTab = "R1",
             onItemClick = {},
         )

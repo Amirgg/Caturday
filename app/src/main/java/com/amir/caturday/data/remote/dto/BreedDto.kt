@@ -31,9 +31,9 @@ data class BreedDto(
     @SerialName("social_needs")
     val socialNeeds: Int,
     @SerialName("wikipedia_url")
-    val wikipediaUrl: String,
+    val wikipediaUrl: String? = null,
     @SerialName("reference_image_id")
-    val referenceImageId: String,
+    val referenceImageId: String? = null,
 )
 
 internal fun BreedDto.toBreed(): Breed =

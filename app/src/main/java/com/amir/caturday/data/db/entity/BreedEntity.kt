@@ -30,9 +30,9 @@ data class BreedEntity(
     @ColumnInfo(name = "social_needs")
     val socialNeeds: Int,
     @ColumnInfo(name = "wikipedia_url")
-    val wikipediaUrl: String,
+    val wikipediaUrl: String? = null,
     @ColumnInfo(name = "reference_image_id")
-    val referenceImageId: String,
+    val referenceImageId: String? = null,
 )
 
 internal fun BreedEntity.toBreed(): Breed =

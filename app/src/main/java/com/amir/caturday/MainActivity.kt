@@ -6,10 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.amir.caturday.domain.model.NavMenuItem
 import com.amir.caturday.theme.AppTheme
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val viewModel = hiltViewModel<ActivityViewModel>()
-            val state = viewModel.uiState.collectAsState()
+            val state = viewModel.uiState.collectAsStateWithLifecycle()
             AppTheme(state.value.theme) {
                 val nav = LocalNavigation.current
                 Scaffold(
@@ -35,7 +35,6 @@ class MainActivity : ComponentActivity() {
                             items =
                                 persistentListOf(
                                     NavMenuItem(Screen.BreedsList.route, stringResource(R.string.nav_home), R.drawable.ic_paw),
-                                    NavMenuItem(Screen.FavoritesList.route, stringResource(R.string.nav_fav), R.drawable.ic_heart),
                                     NavMenuItem(Screen.Settings.route, stringResource(R.string.nav_settings), R.drawable.ic_settings),
                                 ),
                             onItemClick = {

@@ -8,17 +8,17 @@ import com.amir.caturday.data.db.entity.BreedEntity
 import com.amir.caturday.data.db.entity.toBreed
 import com.amir.caturday.data.remote.ApiResponseHandler
 import com.amir.caturday.data.remote.BreedsApi
-import com.amir.caturday.data.remote.dto.toBreed
 import com.amir.caturday.data.remote.dto.toBreedEntity
 import com.amir.caturday.domain.model.Breed
 import com.amir.caturday.domain.model.DataState
-import com.amir.caturday.domain.model.toDomain
 import com.amir.caturday.util.PreferenceKeys
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
@@ -62,7 +62,9 @@ class BreedsRepositoryImpl(
                 is DataState.Loading -> Unit
                 is DataState.Success -> breedDao.insertAll(result.data.map { it.toBreedEntity() })
             }
-        }
+        }.catch {
+            emit(DataState.Failure(DataState.Failure.CODE_INVALID, it.message ?: "Something"))
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun getBreedById(id: String): Flow<DataState<Breed>> =
         flow {
@@ -72,16 +74,7 @@ class BreedsRepositoryImpl(
             } ?: run {
                 emit(DataState.Failure(DataState.Failure.CODE_NOT_FOUND, "Item not found"))
             }
-        }
-
-    override fun searchBreeds(query: String): Flow<DataState<List<Breed>>> =
-        flow {
-            emit(DataState.Loading)
-            val result =
-                call { breedsApi.searchBreeds(query = query) }
-                    .toDomain { map { it.toBreed() } }
-            emit(result)
-        }
+        }.flowOn(Dispatchers.IO)
 
     override suspend fun toggleFavorite(
         id: String,

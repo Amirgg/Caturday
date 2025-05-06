@@ -11,8 +11,6 @@ interface BreedsRepository {
 
     suspend fun getBreedById(id: String): Flow<DataState<Breed>>
 
-    fun searchBreeds(query: String): Flow<DataState<List<Breed>>>
-
     suspend fun toggleFavorite(
         id: String,
         isFavorite: Boolean,

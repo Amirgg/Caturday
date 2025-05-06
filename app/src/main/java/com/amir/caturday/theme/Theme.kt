@@ -17,11 +17,11 @@ import com.amir.caturday.domain.model.Theme
 
 private val DarkBlueColorPalette =
     darkColorScheme(
-        primary = Yellow500, // button, progress
+        primary = Grey200, // button, progress
         onPrimary = Black1000, // button text
-        secondary = Yellow200, // progress indicator, heavier color
+        secondary = Grey400, // progress indicator, heavier color
         onSecondary = Black1000, // button text, look good over secondary
-        tertiary = DeepOrangeA700, // catch attention, accent
+        tertiary = Yellow500, // catch attention, accent
         onTertiary = White1000, // look good over accent
         error = Red700,
         onError = White1000,
@@ -35,9 +35,9 @@ private val DarkBlueColorPalette =
     )
 private val LightGreenColorPalette =
     lightColorScheme(
-        primary = Green500, // button, progress
+        primary = Black1000, // button, progress
         onPrimary = White1000, // button text
-        secondary = Green700, // progress indicator, heavier color
+        secondary = Grey700, // progress indicator, heavier color
         onSecondary = White1000, // button text, look good over secondary
         tertiary = GreenA400, // catch attention, accent
         onTertiary = Black1000, // look good over accent

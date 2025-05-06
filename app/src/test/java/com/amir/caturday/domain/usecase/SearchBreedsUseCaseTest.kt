@@ -2,7 +2,6 @@ package com.amir.caturday.domain.usecase
 
 import com.amir.caturday.data.repo.BreedsRepository
 import com.amir.caturday.domain.model.DataState
-import com.amir.caturday.domain.usecase.breed.SearchBreedsUseCase
 import com.amir.caturday.util.toListWithTimeout
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

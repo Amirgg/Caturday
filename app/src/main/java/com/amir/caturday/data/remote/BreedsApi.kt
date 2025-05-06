@@ -10,9 +10,4 @@ interface BreedsApi {
         @Query("page") page: Int,
         @Query("limit") limit: Int,
     ): List<BreedDto>
-
-    @GET("breeds/search")
-    suspend fun searchBreeds(
-        @Query("q") query: String,
-    ): List<BreedDto>
 }
