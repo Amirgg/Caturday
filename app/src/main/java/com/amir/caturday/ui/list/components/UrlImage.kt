@@ -39,10 +39,12 @@ fun UrlImage(
                     .build()
             AsyncImage(
                 model = imageRequest,
+                error = painterResource(R.drawable.ic_launcher),
                 placeholder = painterResource(R.drawable.ic_paw),
                 filterQuality = FilterQuality.Low,
                 contentScale = ContentScale.Crop,
                 contentDescription = null,
+                fallback = painterResource(R.drawable.ic_launcher),
                 modifier = modifier,
             )
         } ?: run {
