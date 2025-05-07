@@ -16,4 +16,6 @@
     <string name="socialNeeds">Social Needs</string>
     <string name="life_span">Life Span</string>
     <string name="origin">Origin</string>
+    <string name="light_theme">Light Theme</string>
+    <string name="dark_theme">Dark Theme</string>
 </resources>

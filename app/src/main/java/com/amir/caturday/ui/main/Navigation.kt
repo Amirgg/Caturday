@@ -2,21 +2,15 @@ package com.amir.caturday.ui.main
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.amir.caturday.domain.model.Theme
 import com.amir.caturday.ui.details.BreedsDetailsScreen
 import com.amir.caturday.ui.list.BreedsListScreen
+import com.amir.caturday.ui.settings.SettingsScreen
 
 @Composable
 fun Navigation(navController: NavHostController) {
@@ -44,16 +38,7 @@ fun Navigation(navController: NavHostController) {
             BreedsDetailsScreen()
         }
         composable(route = Screen.Settings.route) {
-            val viewModel = hiltViewModel<ActivityViewModel>()
-            Column(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                Button({
-                    viewModel.setTheme(Theme.entries.random())
-                }) {
-                    Text("Change Theme")
-                }
-            }
+            SettingsScreen()
         }
     }
 }

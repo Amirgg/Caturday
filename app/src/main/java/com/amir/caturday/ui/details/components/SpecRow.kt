@@ -1,4 +1,4 @@
-package com.amir.caturday.ui.details.component
+package com.amir.caturday.ui.details.components
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background

@@ -16,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amir.caturday.R
 import com.amir.caturday.theme.AppPreviewTheme
-import com.amir.caturday.ui.details.component.BreedDetails
+import com.amir.caturday.ui.details.components.BreedDetails
 import com.amir.caturday.ui.list.components.EmptyPage
 
 @Composable

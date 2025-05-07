@@ -61,7 +61,7 @@ fun AppTheme(
 ) {
     val colors =
         when (theme) {
-            Theme.DARK_BLUE -> DarkBlueColorPalette
+            Theme.DARK_YELLOW -> DarkBlueColorPalette
             Theme.LIGHT_GREEN -> LightGreenColorPalette
             Theme.DEFAULT_THEME -> LightGreenColorPalette
         }
