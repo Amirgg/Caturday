@@ -8,8 +8,8 @@ import com.amir.caturday.domain.model.Breed
 import com.amir.caturday.domain.model.DataState
 import com.amir.caturday.domain.usecase.breed.GetBreedByIdUseCase
 import com.amir.caturday.domain.usecase.breed.ToggleFavoriteUseCase
-import com.amir.caturday.ui.Screen
 import com.amir.caturday.ui.details.BreedsDetailsViewModel
+import com.amir.caturday.ui.main.Screen
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

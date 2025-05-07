@@ -1,4 +1,4 @@
-package com.amir.caturday.ui
+package com.amir.caturday.ui.main
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -14,7 +14,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.amir.caturday.ActivityViewModel
 import com.amir.caturday.domain.model.Theme
 import com.amir.caturday.ui.details.BreedsDetailsScreen
 import com.amir.caturday.ui.list.BreedsListScreen

@@ -1,11 +1,10 @@
-package com.amir.caturday
+package com.amir.caturday.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amir.caturday.domain.model.Theme
 import com.amir.caturday.domain.usecase.settings.GetThemeUseCase
 import com.amir.caturday.domain.usecase.settings.SetThemeUseCase
-import com.amir.caturday.ui.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

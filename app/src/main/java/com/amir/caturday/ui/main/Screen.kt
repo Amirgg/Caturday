@@ -1,4 +1,4 @@
-package com.amir.caturday.ui
+package com.amir.caturday.ui.main
 
 import androidx.navigation.NavBackStackEntry
 

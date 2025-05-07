@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.amir.caturday.domain.model.DataState
 import com.amir.caturday.domain.usecase.breed.GetBreedByIdUseCase
 import com.amir.caturday.domain.usecase.breed.ToggleFavoriteUseCase
-import com.amir.caturday.ui.Screen
 import com.amir.caturday.ui.details.model.BreedDetailsUiModel
 import com.amir.caturday.ui.details.model.toBreedDetailsUiModel
+import com.amir.caturday.ui.main.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

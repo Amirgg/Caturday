@@ -22,10 +22,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.amir.caturday.R
 import com.amir.caturday.theme.AppPreviewTheme
 import com.amir.caturday.theme.LocalNavigation
-import com.amir.caturday.ui.Screen
 import com.amir.caturday.ui.list.components.BreedsList
 import com.amir.caturday.ui.list.components.EmptyPage
 import com.amir.caturday.ui.list.components.SearchRow
+import com.amir.caturday.ui.main.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

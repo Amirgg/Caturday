@@ -1,4 +1,4 @@
-package com.amir.caturday
+package com.amir.caturday.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,12 +11,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.amir.caturday.R
 import com.amir.caturday.domain.model.NavMenuItem
 import com.amir.caturday.theme.AppTheme
 import com.amir.caturday.theme.LocalNavigation
-import com.amir.caturday.ui.BottomNavigationBar
-import com.amir.caturday.ui.Navigation
-import com.amir.caturday.ui.Screen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.collections.immutable.persistentListOf
 
