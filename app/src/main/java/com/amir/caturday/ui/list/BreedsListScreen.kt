@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.pullToRefresh
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -37,57 +39,59 @@ fun BreedsListScreen() {
         modifier =
             Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                .pullToRefresh(
+                    isRefreshing = state.value.isRefreshing,
+                    onRefresh = breedsListViewModel::refresh,
+                    state = pullToRefreshState,
+                    enabled = state.value.isSearching.not(),
+                ),
     ) {
-        PullToRefreshBox(
-            isRefreshing = state.value.isLoading && state.value.breeds.isEmpty(),
-            onRefresh = breedsListViewModel::refresh,
-            state = pullToRefreshState,
-            modifier =
-                Modifier
-                    .fillMaxSize(),
-        ) {
-            Column {
-                SearchRow(
-                    onSearchQueryChanged = breedsListViewModel::onSearchQueryChanged,
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(10.dp),
-                )
-                when {
-                    state.value.showNoResultPage ->
-                        EmptyPage(
-                            title = stringResource(R.string.no_result_title),
-                            message = stringResource(R.string.no_result_desc),
-                            modifier = Modifier.weight(1F),
-                            icon = R.drawable.ic_search,
-                            showRetry = false,
-                        )
+        Column {
+            SearchRow(
+                onSearchQueryChanged = breedsListViewModel::onSearchQueryChanged,
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+            )
+            when {
+                state.value.showNoResultPage ->
+                    EmptyPage(
+                        title = stringResource(R.string.no_result_title),
+                        message = stringResource(R.string.no_result_desc),
+                        modifier = Modifier.weight(1F),
+                        icon = R.drawable.ic_search,
+                        showRetry = false,
+                    )
 
-                    state.value.showFullPageError ->
-                        EmptyPage(
-                            title = stringResource(R.string.error_title),
-                            message = state.value.errorMessage.ifEmpty { stringResource(R.string.error_desc) },
-                            modifier = Modifier.weight(1F),
-                            icon = R.drawable.ic_search,
-                            showRetry = true,
-                            onRetryClick = breedsListViewModel::onRetryClick,
-                        )
+                state.value.showFullPageError ->
+                    EmptyPage(
+                        title = stringResource(R.string.error_title),
+                        message = state.value.errorMessage.ifEmpty { stringResource(R.string.error_desc) },
+                        modifier = Modifier.weight(1F),
+                        icon = R.drawable.ic_search,
+                        showRetry = true,
+                        onRetryClick = breedsListViewModel::onRetryClick,
+                    )
 
-                    else ->
-                        BreedsList(
-                            state = state.value,
-                            onFavoriteClick = breedsListViewModel::onFavoriteClick,
-                            onBreedClick = { navigation.navigate(Screen.BreedsDetails.withArg(it.id)) },
-                            onPaginate = breedsListViewModel::onPaginate,
-                            onDismissError = breedsListViewModel::onDismissErrorClick,
-                            onRetryClick = breedsListViewModel::onRetryClick,
-                            modifier = Modifier.weight(1F),
-                        )
-                }
+                else ->
+                    BreedsList(
+                        state = state.value,
+                        onFavoriteClick = breedsListViewModel::onFavoriteClick,
+                        onBreedClick = { navigation.navigate(Screen.BreedsDetails.withArg(it.id)) },
+                        onPaginate = breedsListViewModel::onPaginate,
+                        onDismissError = breedsListViewModel::onDismissErrorClick,
+                        onRetryClick = breedsListViewModel::onRetryClick,
+                        modifier = Modifier.weight(1F),
+                    )
             }
         }
+        PullToRefreshDefaults.Indicator(
+            modifier = Modifier.align(Alignment.TopCenter),
+            isRefreshing = state.value.isRefreshing,
+            state = pullToRefreshState,
+        )
     }
 }
 

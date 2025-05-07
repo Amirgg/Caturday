@@ -76,14 +76,13 @@ fun SearchRow(
                     tint = MaterialTheme.colorScheme.primary,
                     modifier =
                         Modifier
-                            .clip(CircleShape)
                             .background(MaterialTheme.colorScheme.background)
-                            .padding(4.dp)
-                            .size(16.dp)
+                            .clip(CircleShape)
                             .clickable {
                                 searchState = TextFieldValue()
                                 onSearchQueryChanged("")
-                            },
+                            }.size(32.dp)
+                            .padding(8.dp),
                 )
             }
         }

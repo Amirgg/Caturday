@@ -54,7 +54,7 @@ class BreedsListViewModelTest {
 
     private fun mockData(
         getBreedsResponse: List<Pair<Long, DataState<List<Breed>>>> = listOf(),
-        paginateBreedsResponse: List<Pair<Long, DataState<Unit>>> = listOf(),
+        paginateBreedsResponse: List<Pair<Long, DataState<Boolean>>> = listOf(),
     ) {
         coEvery {
             getBreedsUseCase()
@@ -135,25 +135,6 @@ class BreedsListViewModelTest {
             assertTrue(vm.uiState.value.isLoading)
             delay(1500)
             assertFalse(vm.uiState.value.isLoading)
-        }
-
-    @Test
-    fun `when getBreedsUseCase emits successful data, hasMore should update correctly`() =
-        runTest {
-            mockData(
-                getBreedsResponse =
-                    listOf(
-                        0L to DataState.Loading,
-                        1000L to DataState.Success(listOf(breedDto.toBreed())),
-                        2000L to DataState.Success(listOf(breedDto.toBreed())),
-                    ),
-            )
-            val vm = createViewModel()
-            assertTrue(vm.uiState.value.hasMore)
-            delay(1500)
-            assertTrue(vm.uiState.value.hasMore)
-            delay(2500)
-            assertFalse(vm.uiState.value.hasMore)
         }
 
     @Test
@@ -334,7 +315,7 @@ class BreedsListViewModelTest {
                 paginateBreedsResponse =
                     listOf(
                         0L to DataState.Loading,
-                        1000L to DataState.Success(Unit),
+                        1000L to DataState.Success(true),
                     ),
             )
             val vm = createViewModel()
@@ -342,6 +323,25 @@ class BreedsListViewModelTest {
             assertTrue(vm.uiState.value.isLoading)
             delay(1500)
             assertFalse(vm.uiState.value.isLoading)
+        }
+
+    @Test
+    fun `when pagination is successful, state should update hasMore correctly`() =
+        runTest {
+            mockData(
+                paginateBreedsResponse =
+                    listOf(
+                        0L to DataState.Loading,
+                        1000L to DataState.Success(false),
+                        2000L to DataState.Success(true),
+                    ),
+            )
+            val vm = createViewModel()
+            vm.onPaginate()
+            delay(1500)
+            assertTrue(vm.uiState.value.hasMore)
+            delay(1500)
+            assertFalse(vm.uiState.value.hasMore)
         }
 
     @Test
@@ -367,6 +367,20 @@ class BreedsListViewModelTest {
         }
 
     @Test
+    fun `when searching, refresh should not do anything`() =
+        runTest {
+            mockData()
+            val vm = createViewModel()
+            vm.onSearchQueryChanged("A")
+            delay(1000)
+            assertTrue(vm.uiState.value.isSearching)
+            vm.refresh()
+            coVerify(exactly = 0) {
+                invalidateCacheUseCase()
+            }
+        }
+
+    @Test
     fun `when search query is changed, search data should update after a delay`() =
         runTest {
             mockData(
@@ -386,5 +400,21 @@ class BreedsListViewModelTest {
             assertEquals(0, vm.uiState.value.searchingBreeds.size)
             delay(1000)
             assertEquals(1, vm.uiState.value.searchingBreeds.size)
+        }
+
+    @Test
+    fun `when refresh is called, hasMore should be true`() =
+        runTest {
+            mockData(
+                paginateBreedsResponse =
+                    listOf(
+                        0L to DataState.Success(true),
+                    ),
+            )
+            val vm = createViewModel()
+            vm.onPaginate()
+            assertFalse(vm.uiState.value.hasMore)
+            vm.refresh()
+            assertTrue(vm.uiState.value.hasMore)
         }
 }

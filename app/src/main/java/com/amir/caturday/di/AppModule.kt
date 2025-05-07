@@ -9,6 +9,7 @@ import androidx.room.Room
 import com.amir.caturday.ApplicationClass
 import com.amir.caturday.BuildConfig
 import com.amir.caturday.data.db.BreedDatabase
+import com.amir.caturday.data.remote.ApiKeyInterceptor
 import com.amir.caturday.data.remote.BreedsApi
 import com.amir.caturday.data.repo.BreedsRepository
 import com.amir.caturday.data.repo.BreedsRepositoryImpl
@@ -30,6 +31,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -58,12 +60,20 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(json: Json): Retrofit =
-        Retrofit
+    fun provideRetrofit(json: Json): Retrofit {
+        val okHttpClient =
+            OkHttpClient
+                .Builder()
+                .addInterceptor(ApiKeyInterceptor(BuildConfig.API_KEY))
+                .build()
+
+        return Retrofit
             .Builder()
+            .client(okHttpClient)
             .baseUrl(Constant.CON_BASE_URL)
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
+    }
 
     @Singleton
     @Provides

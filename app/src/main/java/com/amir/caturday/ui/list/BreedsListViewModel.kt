@@ -59,7 +59,9 @@ class BreedsListViewModel
         ) {
             val showNoResultPage = isSearching && searchingBreeds.isEmpty()
             val showFullPageError = showError && breeds.isEmpty()
+            val shouldNotPaginate = isLoading || hasMore.not() || paginationError
             val showPaginationLoading = hasMore && isSearching.not()
+            val isRefreshing = isLoading && breeds.isEmpty() && isSearching.not()
         }
 
         init {
@@ -68,7 +70,7 @@ class BreedsListViewModel
         }
 
         fun onPaginate() {
-            if (uiState.value.isLoading) return
+            if (uiState.value.shouldNotPaginate) return
             viewModelScope.launch {
                 paginateBreedsUseCase(
                     page = uiState.value.breeds.size / BreedsRepositoryImpl.LIMIT,
@@ -76,15 +78,28 @@ class BreedsListViewModel
                     when (result) {
                         is DataState.Failure -> handleError(result.message)
                         is DataState.Loading -> _uiState.update { it.copy(isLoading = true) }
-                        is DataState.Success -> _uiState.update { it.copy(isLoading = false, paginationError = false) }
+                        is DataState.Success ->
+                            _uiState.update {
+                                it.copy(
+                                    isLoading = false,
+                                    paginationError = false,
+                                    hasMore = result.data.not(),
+                                )
+                            }
                     }
                 }
             }
         }
 
         fun refresh() {
+            if (uiState.value.isSearching) return
             viewModelScope.launch(Dispatchers.IO) {
                 invalidateCacheUseCase()
+            }
+            _uiState.update {
+                it.copy(
+                    hasMore = true,
+                )
             }
         }
 
@@ -96,7 +111,10 @@ class BreedsListViewModel
 
         fun onRetryClick() {
             _uiState.update {
-                it.copy(showError = false)
+                it.copy(
+                    showError = false,
+                    paginationError = false,
+                )
             }
             onPaginate()
         }
@@ -131,12 +149,10 @@ class BreedsListViewModel
                         is DataState.Failure -> handleError(result.message)
                         is DataState.Loading -> _uiState.update { it.copy(isLoading = true) }
                         is DataState.Success -> {
-                            val hasMore = uiState.value.breeds.size != result.data.size || uiState.value.breeds.isEmpty()
                             _uiState.update {
                                 it.copy(
                                     breeds = result.data.map { it.toBreedCardUiModel() }.toImmutableList(),
                                     isLoading = false,
-                                    hasMore = hasMore,
                                     paginationError = false,
                                 )
                             }

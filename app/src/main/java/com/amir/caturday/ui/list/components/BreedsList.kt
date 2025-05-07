@@ -69,7 +69,17 @@ fun BreedsList(
                     onFavoriteClick = { onFavoriteClick(data[it]) },
                 )
             }
-            if (state.showPaginationLoading) {
+
+            if (state.paginationError) {
+                item {
+                    RetryButton(
+                        onClick = onRetryClick,
+                        modifier =
+                            Modifier
+                                .padding(10.dp),
+                    )
+                }
+            } else if (state.showPaginationLoading) {
                 item {
                     CircularProgressIndicator(
                         modifier =
@@ -81,21 +91,16 @@ fun BreedsList(
                     )
                 }
             }
-            if (state.paginationError) {
-                item {
-                    RetryButton(
-                        onClick = onRetryClick,
-                        modifier = Modifier.padding(10.dp),
-                    )
-                }
-            }
-            item { /*bottom padding*/ }
+            item {}
         }
-        AnimatedVisibility(state.showError) {
+        AnimatedVisibility(state.showError, modifier = Modifier.align(Alignment.BottomCenter)) {
             ErrorRow(
                 data = state.errorMessage,
                 onDismissClick = onDismissError,
-                modifier = Modifier.fillMaxWidth().padding(10.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
             )
         }
     }

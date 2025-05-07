@@ -19,6 +19,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.unmockkAll
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -157,5 +158,84 @@ class BreedsRepositoryImplTest {
             repo.toggleFavorite("A", false)
             val breeds2 = repo.getBreeds().toListWithTimeout().last() as DataState.Success
             assertFalse(breeds2.data.first().isFavorite)
+        }
+
+    @Test
+    fun `when paginating, it should emit loading first`() =
+        runTest {
+            mockData(
+                apiItems = breedDtoList,
+            )
+            val repo = createRepo()
+            val result = repo.paginate(0).toList().first()
+            assertEquals(DataState.Loading, result)
+        }
+
+    @Test
+    fun `when pagination fails, it should emit failure state`() =
+        runTest {
+            mockData()
+            coEvery {
+                api.getBreeds(any(), any())
+            } throws Exception("A")
+            val repo = createRepo()
+            val result = repo.paginate(0).toList().last()
+            assert(result is DataState.Failure)
+        }
+
+    @Test
+    fun `when pagination is successful, data should be added to database`() =
+        runTest {
+            mockData(
+                daoItems = listOf(),
+                apiItems = breedDtoList,
+            )
+            val repo = createRepo()
+            val breeds = repo.getBreeds().toListWithTimeout().last() as DataState.Success
+            assertEquals(0, breeds.data.size)
+            repo.paginate(0).toList()
+            val breeds2 = repo.getBreeds().toListWithTimeout().last() as DataState.Success
+            assertEquals(10, breeds2.data.size)
+        }
+
+    @Test
+    fun `when pagination result is empty, it should emit true`() =
+        runTest {
+            mockData(
+                daoItems = listOf(),
+                apiItems =
+                    buildList {
+                        repeat(BreedsRepositoryImpl.LIMIT) {
+                            add(breedDto)
+                        }
+                    },
+            )
+            val repo = createRepo()
+            val result = repo.paginate(0).toList().last() as DataState.Success
+            assertFalse(result.data)
+
+            mockData(
+                daoItems = listOf(),
+                apiItems = listOf(),
+            )
+            val result2 = repo.paginate(0).toList().last() as DataState.Success
+            assertTrue(result2.data)
+        }
+
+    @Test
+    fun `when pagination result is not empty and is not dividable with limit, it should emit true`() =
+        runTest {
+            mockData(
+                daoItems = listOf(),
+                apiItems =
+                    buildList {
+                        repeat(BreedsRepositoryImpl.LIMIT - 1) {
+                            add(breedDto)
+                        }
+                    },
+            )
+            val repo = createRepo()
+            val result = repo.paginate(0).toList().last() as DataState.Success
+            assertTrue(result.data)
         }
 }

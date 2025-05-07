@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class PaginateBreedsUseCase(
     private val breedsRepository: BreedsRepository,
 ) {
-    suspend operator fun invoke(page: Int): Flow<DataState<Unit>> = breedsRepository.paginate(page)
+    suspend operator fun invoke(page: Int): Flow<DataState<Boolean>> = breedsRepository.paginate(page)
 }

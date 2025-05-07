@@ -53,17 +53,21 @@ class BreedsRepositoryImpl(
             emit(DataState.Failure(DataState.Failure.CODE_INVALID, it.message ?: "Something"))
         }
 
-    override suspend fun paginate(page: Int): Flow<DataState<Unit>> =
+    override suspend fun paginate(page: Int): Flow<DataState<Boolean>> =
         flow {
-            emit(DataState.Loading)
             val result = call { breedsApi.getBreeds(page, LIMIT) }
             when (result) {
                 is DataState.Failure -> emit(result)
                 is DataState.Loading -> Unit
-                is DataState.Success -> breedDao.insertAll(result.data.map { it.toBreedEntity() })
+                is DataState.Success -> {
+                    breedDao.insertAll(result.data.map { it.toBreedEntity() })
+                    emit(DataState.Success(result.data.size % LIMIT != 0 || result.data.isEmpty()))
+                }
             }
+        }.onStart {
+            emit(DataState.Loading)
         }.catch {
-            emit(DataState.Failure(DataState.Failure.CODE_INVALID, it.message ?: "Something"))
+            emit(DataState.Failure(DataState.Failure.CODE_INVALID, it.message ?: "Something went wrong"))
         }.flowOn(Dispatchers.IO)
 
     override suspend fun getBreedById(id: String): Flow<DataState<Breed>> =

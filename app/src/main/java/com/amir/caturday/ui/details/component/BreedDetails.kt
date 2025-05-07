@@ -64,7 +64,9 @@ fun BreedDetails(
                 data.imageUrl,
                 modifier =
                     Modifier
-                        .alpha(alpha)
+                        .offset {
+                            IntOffset(x = 0, y = -(40 - (40 * alpha)).dp.roundToPx())
+                        }.alpha(alpha)
                         .aspectRatio(1F)
                         .fillMaxWidth(),
             )
