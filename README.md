@@ -34,7 +34,7 @@ This project follows Clean Architecture principles and is modularized into:
 - **Domain Layer:** Contains models and use cases.
 - **UI Layer:** Built with Jetpack Compose and MVVM.
 - **DI Layer:** Hilt modules for dependency injection.
-- **Util Layer:** Common helpers, constants, and extensions.\
+- **Util Layer:** Common helpers, constants, and extensions.
   
 Data is observed from a single Room source. Pagination is triggered when reaching the list’s end, fetching the next page via the network and updating the database.
 
